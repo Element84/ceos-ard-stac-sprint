@@ -52,6 +52,16 @@ def validate_jsonschema(href: str) -> None:
     Injects the CARD4L schema.
     """
     stac_object = pystac.read_file(href)
+    existing_card4l_url = next(
+        (
+            url
+            for url in stac_object.stac_extensions
+            if url.startswith("https://stac-extensions.github.io/card4l")
+        ),
+        None,
+    )
+    if existing_card4l_url:
+        stac_object.stac_extensions.remove(existing_card4l_url)
     stac_object.stac_extensions.append(CARD4L_EXTENSION)
     stac_object.validate()
 
