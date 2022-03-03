@@ -42,6 +42,8 @@ def validate(href: str) -> None:
                 click.echo(result.message)
                 if result.suggestion:
                     click.echo(f"    SUGGESTION: {result.suggestion}")
+            click.echo()
+        raise click.ClickException("One or more validation problems detected")
 
 
 @cli.command()
